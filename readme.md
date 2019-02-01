@@ -37,5 +37,5 @@ Disable SSH password login by setting `PasswordAuthentication no` in `/etc/ssh/s
 sudo apt update
 sudo apt install \
     apt-transport-https ca-certificates gnupg2 software-properties-common \
-    curl nmap rsync joe vim mc tmux git
+    curl nmap rsync joe vim mc tmux git build-essential
 ```
