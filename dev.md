@@ -61,14 +61,17 @@ Add repository
 echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 ```
 
+### install kubectl from repository
+
 ```bash
 sudo apt update
 sudo apt install -y kubectl
 ```
 
-**install from binary**
+### install kubectl from github
 
 ```bash
-curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
+  && chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
 ```
 
