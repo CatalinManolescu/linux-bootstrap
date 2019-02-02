@@ -2,6 +2,10 @@
 
 Debian box setup
 
+Additional config:
+
+- [development box](dev.md)
+
 ## create user
 
 ```bash
