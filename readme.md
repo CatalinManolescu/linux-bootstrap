@@ -44,6 +44,7 @@ ssh-keygen -t ed25519 -a 100
 ```bash
 sudo apt update
 sudo apt install \
-    apt-transport-https ca-certificates gnupg2 software-properties-common \
+    apt-transport-https lsb-release \
+    ca-certificates gnupg2 dirmngr software-properties-common \
     curl nmap rsync joe vim mc tmux git build-essential
 ```

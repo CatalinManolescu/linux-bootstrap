@@ -1,4 +1,4 @@
-# setup dev env
+# set up dev env
 
 **Resources:**
 
@@ -58,7 +58,7 @@ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 Add repository
 
 ```bash
-echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 ```
 
 ### install kubectl from repository
@@ -86,7 +86,7 @@ curl -s https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo
 Add repository
 
 ```bash
-echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" | sudo tee -a /etc/apt/sources.list.d/vscode.list
+echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
 ```
 
 ### install vscode from repository
@@ -94,4 +94,27 @@ echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" 
 ```bash
 sudo apt update
 sudo apt install -y code
+```
+
+## azure cli
+
+Add GPG key
+
+```bash
+sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
+     --keyserver packages.microsoft.com \
+     --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
+```
+
+Add repository
+
+```bash
+echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+```
+
+### install azure cli from repository
+
+```bash
+sudo apt-get update
+sudo apt-get install azure-cli
 ```
