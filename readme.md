@@ -1,6 +1,6 @@
-# setup new linux box
+# set up new linux box
 
-Debian setup
+Debian box setup
 
 ## create user
 
@@ -21,7 +21,7 @@ usermod -aG sudo catalin
 
 Edit `/etc/apt/sources.list` and add `non-free` to the end of all lines.
 
-## setup ssh server
+## set up ssh server
 
 ```bash
 sudo apt install openssh-server
@@ -30,6 +30,14 @@ sudo apt install openssh-server
 Add ssh key to `~/.ssh/authorized_keys`.
 
 Disable SSH password login by setting `PasswordAuthentication no` in `/etc/ssh/sshd_config`.
+
+## set up ssh key
+
+```bash
+ssh-keygen -t ed25519 -a 100
+```
+
+*the `-a` option specifies the number of KDF (key derivation function) rounds used.  Higher numbers result in slower passphrase verification and increased resistance to brute-force password cracking (should the keys be stolen).*
 
 ## install apps
 
