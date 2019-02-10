@@ -50,6 +50,6 @@ sudo apt update
 sudo apt install \
     apt-transport-https lsb-release \
     ca-certificates gnupg2 dirmngr software-properties-common \
-    curl nmap rsync joe vim mc tmux git build-essential \
+    curl jq nmap rsync joe vim mc tmux git build-essential \
     vnstat htop lm-sensors
 ```
