@@ -77,12 +77,12 @@ export COMPOSE_CONVERT_WINDOWS_PATHS=1
 Share certificates from Docker Toolbox on Windows with Docker client on WSL
 
 ```bash
-winUser=$(cmd.exe /c "echo %USERNAME%")
+win_user=$(cmd.exe /c "echo %USERNAME%")
 mkdir -p ~/.docker
-ln -s /c/Users/${winUser}/.docker/machine/certs/ca.pem ~/.docker/ca.pem
-ln -s /c/Users/${winUser}/.docker/machine/certs/ca-key.pem ~/.docker/ca-key.pem
-ln -s /c/Users/${winUser}/.docker/machine/certs/cert.pem ~/.docker/cert.pem
-ln -s /c/Users/${winUser}/.docker/machine/certs/key.pem ~/.docker/key.pem
+ln -s /c/Users/${win_user}/.docker/machine/certs/ca.pem ~/.docker/ca.pem
+ln -s /c/Users/${win_user}/.docker/machine/certs/ca-key.pem ~/.docker/ca-key.pem
+ln -s /c/Users/${win_user}/.docker/machine/certs/cert.pem ~/.docker/cert.pem
+ln -s /c/Users/${win_user}/.docker/machine/certs/key.pem ~/.docker/key.pem
 ```
 
 ## kubernetes
