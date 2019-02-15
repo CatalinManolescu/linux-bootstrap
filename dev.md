@@ -47,6 +47,44 @@ sudo apt update
 sudo apt install -y docker-ce docker-ce-cli containerd.io
 ```
 
+### install docker-compose
+
+```bash
+pip install docker-compose
+```
+
+### set up connection from WSL to docker toolbox
+
+Set mount location of windows partitions to root path (eg. /c /d instead of /mnt/c /mnt/d)
+
+```bash
+sudo cat > /etc/wsl.conf <<^D
+[automount]
+root = /
+options = "metadata"
+^D
+```
+
+Edit `.bashrc` and add
+
+```bash
+alias docker-machine="docker-machine.exe"
+# add docker env vars and convert paths
+eval $(docker-machine env default --shell bash | sed 's?\\?/?g;s?C:/?/c/?g')
+export COMPOSE_CONVERT_WINDOWS_PATHS=1
+```
+
+Share certificates from Docker Toolbox on Windows with Docker client on WSL
+
+```bash
+winUser=$(cmd.exe /c "echo %USERNAME%")
+mkdir -p ~/.docker
+ln -s /c/Users/${winUser}/.docker/machine/certs/ca.pem ~/.docker/ca.pem
+ln -s /c/Users/${winUser}/.docker/machine/certs/ca-key.pem ~/.docker/ca-key.pem
+ln -s /c/Users/${winUser}/.docker/machine/certs/cert.pem ~/.docker/cert.pem
+ln -s /c/Users/${winUser}/.docker/machine/certs/key.pem ~/.docker/key.pem
+```
+
 ## kubernetes
 
 Add GPG key
