@@ -4,6 +4,22 @@
 
 - ARM architecture <https://en.wikipedia.org/wiki/ARM_architecture#Cores>
 
+## virtual box
+
+Resource <https://www.virtualbox.org/wiki/Linux_Downloads>
+
+Add GPG key
+
+```bash
+curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo apt-key add -
+```
+
+Add repository
+
+```bash
+echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" | sudo tee /etc/apt/sources.list.d/virtual-box.list
+```
+
 ## docker
 
 ### add docker repository
@@ -21,7 +37,12 @@ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 Add repository (replace `arch=amd64` with `arch=arm64` for ARM 64 bit architecture)
 
 ```bash
-echo "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee -a /etc/apt/sources.list.d/docker.list
+echo "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+```
+
+```bash
+sudo apt update
+sudo apt install -y virtualbox-6.0
 ```
 
 #### add Ubuntu docker repository
@@ -37,7 +58,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 Add repository (replace `arch=amd64` with `arch=arm64` for ARM 64 bit architecture)
 
 ```bash
-echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee -a /etc/apt/sources.list.d/docker.list
+echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
 ```
 
 ### install docker-ce and containerd
