@@ -53,3 +53,12 @@ sudo apt install \
     curl jq nmap rsync joe vim mc tmux git build-essential \
     vnstat htop lm-sensors
 ```
+
+## install dotfiles
+
+```bash
+cd ~
+git clone git@github.com:CatalinManolescu/dotfiles.git .dotfiles
+cd .dotfiles
+./install
+```
