@@ -74,7 +74,7 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io
 pip install docker-compose
 ```
 
-### Change default container location
+### change default docker data location
 
 ```bash
 # stop docker service
