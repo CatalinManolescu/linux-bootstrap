@@ -74,6 +74,23 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io
 pip install docker-compose
 ```
 
+### Change default container location
+
+```bash
+# stop docker service
+sudo systemctl stop docker
+
+# create daemon configuration file https://docs.docker.com/engine/reference/commandline/dockerd//#daemon-configuration-file
+sudo mkdir -p /etc/docker
+# replace with your desired path
+sudo cat > /etc/docker/daemon.json <<EOF
+{
+    "data-root": "/mnt/docker-data",
+    "storage-driver": "overlay2"
+}
+EOF
+```
+
 ### set up connection from WSL to docker toolbox
 
 Set mount location of windows partitions to root path (eg. /c /d instead of /mnt/c /mnt/d)
@@ -104,6 +121,27 @@ ln -s /c/Users/${win_user}/.docker/machine/certs/ca.pem ~/.docker/ca.pem
 ln -s /c/Users/${win_user}/.docker/machine/certs/ca-key.pem ~/.docker/ca-key.pem
 ln -s /c/Users/${win_user}/.docker/machine/certs/cert.pem ~/.docker/cert.pem
 ln -s /c/Users/${win_user}/.docker/machine/certs/key.pem ~/.docker/key.pem
+```
+## java
+
+### install adoptopenjdk on Debian
+
+Add GPG key
+
+```bash
+wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
+```
+
+Add repository
+
+```bash
+echo "deb [arch=amd64] https://adoptopenjdk.jfrog.io/adoptopenjdk/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/adoptopenjdk.list
+```
+
+Install
+
+```bash
+sudo apt update && sudo apt install adoptopenjdk-11-hotspot
 ```
 
 ## kubernetes
