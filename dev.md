@@ -70,9 +70,33 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io
 
 ### install docker-compose
 
+Using `pip` 
+
 ```bash
 pip install docker-compose
 ```
+
+Or get latest from GitHub
+
+1. create upgrade script
+    ```bash
+    sudo cat > /usr/local/bin/docker-compose-upgrade <<EOF
+    #!/usr/bin/env bash
+
+    DOCKER_COMPOSE_VERSION=`curl --silent "https://api.github.com/repos/docker/compose/releases" |  jq -r '[.[] | select( .prerelease == false ) | {tag_name, prerelease, tarball_url}][0].tag_name'`
+
+    echo "upgrading docker-compose to version '$DOCKER_COMPOSE_VERSION'"
+
+    sudo curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    EOF
+    ```
+2. install docker-compose
+
+    ```bash
+    sudo chmod +x /usr/local/bin/docker-compose-upgrade
+    docker-compose-upgrade
+    ```
 
 ### change default docker data location
 
@@ -86,7 +110,11 @@ sudo mkdir -p /etc/docker
 sudo cat > /etc/docker/daemon.json <<EOF
 {
     "data-root": "/mnt/docker-data",
-    "storage-driver": "overlay2"
+    "storage-driver": "overlay2",
+    "log-opts": {
+      "max-size": "10m",
+      "max-file": "3"
+    }
 }
 EOF
 ```
@@ -96,11 +124,11 @@ EOF
 Set mount location of windows partitions to root path (eg. /c /d instead of /mnt/c /mnt/d)
 
 ```bash
-sudo cat > /etc/wsl.conf <<^D
+sudo cat > /etc/wsl.conf <<EOF
 [automount]
 root = /
 options = "metadata"
-^D
+EOF
 ```
 
 Edit `.bashrc` and add
