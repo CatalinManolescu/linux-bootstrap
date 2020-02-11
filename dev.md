@@ -80,7 +80,7 @@ Or get latest from GitHub
 
 1. create upgrade script
     ```bash
-    sudo cat > /usr/local/bin/docker-compose-upgrade <<EOF
+    sudo tee /usr/local/bin/docker-compose-upgrade <<EOF
     #!/usr/bin/env bash
 
     DOCKER_COMPOSE_VERSION=`curl --silent "https://api.github.com/repos/docker/compose/releases" |  jq -r '[.[] | select( .prerelease == false ) | {tag_name, prerelease, tarball_url}][0].tag_name'`
