@@ -83,11 +83,11 @@ Or get latest from GitHub
     sudo tee /usr/local/bin/docker-compose-upgrade <<EOF
     #!/usr/bin/env bash
 
-    DOCKER_COMPOSE_VERSION=`curl --silent "https://api.github.com/repos/docker/compose/releases" |  jq -r '[.[] | select( .prerelease == false ) | {tag_name, prerelease, tarball_url}][0].tag_name'`
+    DOCKER_COMPOSE_VERSION=\`curl --silent "https://api.github.com/repos/docker/compose/releases" |  jq -r '[.[] | select( .prerelease == false ) | {tag_name, prerelease, tarball_url}][0].tag_name'\`
 
-    echo "upgrading docker-compose to version '$DOCKER_COMPOSE_VERSION'"
+    echo "upgrading docker-compose to version '\$DOCKER_COMPOSE_VERSION'"
 
-    sudo curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+    sudo curl -L https://github.com/docker/compose/releases/download/\${DOCKER_COMPOSE_VERSION}/docker-compose-\`uname -s\`-\`uname -m\` -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
     EOF
     ```
