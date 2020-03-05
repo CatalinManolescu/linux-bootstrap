@@ -107,7 +107,7 @@ sudo systemctl stop docker
 # create daemon configuration file https://docs.docker.com/engine/reference/commandline/dockerd//#daemon-configuration-file
 sudo mkdir -p /etc/docker
 # replace with your desired path
-sudo cat > /etc/docker/daemon.json <<EOF
+sudo tee /etc/docker/daemon.json <<EOF
 {
     "data-root": "/mnt/docker-data",
     "storage-driver": "overlay2",
