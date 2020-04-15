@@ -79,6 +79,7 @@ pip install docker-compose
 Or get latest from GitHub
 
 1. create upgrade script
+
     ```bash
     sudo tee /usr/local/bin/docker-compose-upgrade <<EOF
     #!/usr/bin/env bash
@@ -91,6 +92,7 @@ Or get latest from GitHub
     sudo chmod +x /usr/local/bin/docker-compose
     EOF
     ```
+
 2. install docker-compose
 
     ```bash
@@ -243,3 +245,31 @@ echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_rel
 sudo apt-get update
 sudo apt-get install azure-cli
 ```
+
+## terraform
+
+### install latest terraform cli
+
+1. create upgrade script
+    
+    ```bash
+    sudo tee /usr/local/bin/terraform-upgrade <<EOF
+    #!/usr/bin/env bash
+
+    TERRAFORM_VERSION=\`curl --silent "https://api.github.com/repos/hashicorp/terraform/releases" |  jq -r '[.[] | select( .prerelease == false ) | {tag_name, prerelease, tarball_url}][0].tag_name'\`
+    TERRAFORM_VERSION=\${TERRAFORM_VERSION//v}
+    echo "upgrading terraform to version '\$TERRAFORM_VERSION'"
+    
+    curl -L https://releases.hashicorp.com/terraform/\${TERRAFORM_VERSION}/terraform_\${TERRAFORM_VERSION}_linux_amd64.zip -o /tmp/terraform_linux_amd64.zip
+    
+    sudo unzip -u /tmp/terraform_linux_amd64.zip -d /usr/local/bin && rm -f /tmp/terraform_linux_amd64.zip
+    sudo chmod +x /usr/local/bin/terraform
+    EOF
+    sudo chmod +x /usr/local/bin/terraform-upgrade
+    ```
+
+2. install terraform
+
+    ```bash
+    terraform-upgrade
+    ```
