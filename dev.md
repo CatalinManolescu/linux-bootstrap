@@ -176,6 +176,35 @@ sudo apt update && sudo apt install adoptopenjdk-11-hotspot
 
 ## kubernetes
 
+### install kind
+
+Install latest from github
+
+1. create upgrade script
+
+    ```bash
+    sudo tee /usr/local/bin/kind-upgrade <<EOF
+    #!/usr/bin/env bash
+    
+    PLATFORM=linux-amd64
+    KIND_VERSION=\`curl --silent "https://api.github.com/repos/kubernetes-sigs/kind/releases" |  jq -r '[.[] | select( .prerelease == false ) | {tag_name, prerelease, tarball_url}][0].tag_name'\`
+
+    echo "upgrading kind to version '\$KIND_VERSION'"
+
+    sudo curl -L https://github.com/kubernetes-sigs/kind/releases/download/\${KIND_VERSION}/kind-\${PLATFORM} -o /usr/local/bin/kind
+    sudo chmod +x /usr/local/bin/kind
+    EOF
+    sudo chmod +x /usr/local/bin/kind-upgrade
+    ```
+
+2. install kind
+
+    ```bash
+    kind-upgrade
+    ```
+
+### install kubectl from debian package repository
+
 Add GPG key
 
 ```bash
@@ -188,7 +217,7 @@ Add repository
 echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 ```
 
-### install kubectl from repository
+Install kubectl
 
 ```bash
 sudo apt update
