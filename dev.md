@@ -129,7 +129,8 @@ Set mount location of windows partitions to root path (eg. /c /d instead of /mnt
 sudo tee /etc/wsl.conf <<EOF
 [automount]
 root = /
-options = "metadata"
+enabled = true
+options = "metadata,umask=22,fmask=11"
 EOF
 ```
 
