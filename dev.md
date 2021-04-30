@@ -20,6 +20,11 @@ Add repository
 echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" | sudo tee /etc/apt/sources.list.d/virtual-box.list
 ```
 
+```bash
+sudo apt update
+sudo apt install -y virtualbox-6.0
+```
+
 ## docker
 
 ### add docker repository
@@ -38,11 +43,6 @@ Add repository (replace `arch=amd64` with `arch=arm64` for ARM 64 bit architectu
 
 ```bash
 echo "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
-```
-
-```bash
-sudo apt update
-sudo apt install -y virtualbox-6.0
 ```
 
 #### add Ubuntu docker repository
