@@ -11,13 +11,13 @@ Resource <https://www.virtualbox.org/wiki/Linux_Downloads>
 Add GPG key
 
 ```bash
-curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo apt-key add -
+curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/oracle-virtualbox.gpg
 ```
 
 Add repository
 
 ```bash
-echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" | sudo tee /etc/apt/sources.list.d/virtual-box.list
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/oracle-virtualbox.gpg] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" | sudo tee /etc/apt/sources.list.d/virtual-box.list
 ```
 
 ```bash
@@ -36,13 +36,13 @@ Resource <https://docs.docker.com/install/linux/docker-ce/debian/>
 Add GPG key
 
 ```bash
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor | sudo tee /etc/apt/keyrings/docker.gpg
 ```
 
 Add repository (replace `arch=amd64` with `arch=arm64` for ARM 64 bit architecture)
 
 ```bash
-echo "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
 ```
 
 #### add Ubuntu docker repository
@@ -52,25 +52,25 @@ Resource <https://docs.docker.com/install/linux/docker-ce/ubuntu/>
 Add GPG key
 
 ```bash
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor | sudo tee /etc/apt/keyrings/docker.gpg
 ```
 
 Add repository (replace `arch=amd64` with `arch=arm64` for ARM 64 bit architecture)
 
 ```bash
-echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
 ```
 
 ### install docker-ce and containerd
 
 ```bash
 sudo apt update
-sudo apt install -y docker-ce docker-ce-cli containerd.io
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
 ### install docker-compose
 
-Using `pip` 
+Using `pip`
 
 ```bash
 pip install docker-compose
@@ -155,24 +155,24 @@ ln -s /c/Users/${win_user}/.docker/machine/certs/key.pem ~/.docker/key.pem
 ```
 ## java
 
-### install adoptopenjdk on Debian
+### install amazon coretto on Debian
 
 Add GPG key
 
 ```bash
-wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
+curl -fsSL https://apt.corretto.aws/corretto.key | gpg --dearmor | sudo tee ../keyrings/correto.gpg
 ```
 
 Add repository
 
 ```bash
-echo "deb [arch=amd64] https://adoptopenjdk.jfrog.io/adoptopenjdk/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/adoptopenjdk.list
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/correto.gpg] https://apt.corretto.aws stable main" | sudo tee /etc/apt/sources.list.d/amazon-coretto-jdk.list
 ```
 
 Install
 
 ```bash
-sudo apt update && sudo apt install adoptopenjdk-11-hotspot
+sudo apt update && sudo apt install java-17-amazon-corretto-jdk
 ```
 
 ## kubernetes
@@ -186,7 +186,7 @@ Install latest from github
     ```bash
     sudo tee /usr/local/bin/kind-upgrade <<EOF
     #!/usr/bin/env bash
-    
+
     PLATFORM=linux-amd64
     KIND_VERSION=\`curl --silent "https://api.github.com/repos/kubernetes-sigs/kind/releases" |  jq -r '[.[] | select( .prerelease == false ) | {tag_name, prerelease, tarball_url}][0].tag_name'\`
 
@@ -281,7 +281,7 @@ sudo apt-get install azure-cli
 ### install latest terraform cli
 
 1. create upgrade script
-    
+
     ```bash
     sudo tee /usr/local/bin/terraform-upgrade <<EOF
     #!/usr/bin/env bash
@@ -289,9 +289,9 @@ sudo apt-get install azure-cli
     TERRAFORM_VERSION=\`curl --silent "https://api.github.com/repos/hashicorp/terraform/releases" |  jq -r '[.[] | select( .prerelease == false ) | {tag_name, prerelease, tarball_url}][0].tag_name'\`
     TERRAFORM_VERSION=\${TERRAFORM_VERSION//v}
     echo "upgrading terraform to version '\$TERRAFORM_VERSION'"
-    
+
     curl -L https://releases.hashicorp.com/terraform/\${TERRAFORM_VERSION}/terraform_\${TERRAFORM_VERSION}_linux_amd64.zip -o /tmp/terraform_linux_amd64.zip
-    
+
     sudo unzip -u /tmp/terraform_linux_amd64.zip -d /usr/local/bin && rm -f /tmp/terraform_linux_amd64.zip
     sudo chmod +x /usr/local/bin/terraform
     EOF
