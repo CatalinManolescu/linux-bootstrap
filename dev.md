@@ -237,13 +237,13 @@ curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s htt
 Add GPG key
 
 ```bash
-curl -s https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo apt-key add -
+curl -s https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/packages.microsoft.gpg
 ```
 
 Add repository
 
 ```bash
-echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
 ```
 
 ### install vscode from repository
@@ -255,18 +255,10 @@ sudo apt install -y code
 
 ## azure cli
 
-Add GPG key
-
-```bash
-sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
-     --keyserver packages.microsoft.com \
-     --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
-```
-
 Add repository
 
 ```bash
-echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
 ```
 
 ### install azure cli from repository
