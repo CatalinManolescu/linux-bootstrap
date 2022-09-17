@@ -160,7 +160,7 @@ ln -s /c/Users/${win_user}/.docker/machine/certs/key.pem ~/.docker/key.pem
 Add GPG key
 
 ```bash
-curl -fsSL https://apt.corretto.aws/corretto.key | gpg --dearmor | sudo tee ../keyrings/correto.gpg
+curl -fsSL https://apt.corretto.aws/corretto.key | gpg --dearmor | sudo tee /etc/apt/keyrings/correto.gpg
 ```
 
 Add repository
